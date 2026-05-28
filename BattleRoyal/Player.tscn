@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Characters/Idle.fbx" type="PackedScene" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="SphereMesh" id=3]
+
+[sub_resource type="CapsuleMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color(0.84, 0.70, 0.58, 1)
+roughness = 0.85
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color(0.16, 0.18, 0.26, 1)
+roughness = 0.95
+
+[node name="Player" type="KinematicBody"]
+script = ExtResource( 1 )
+low_spec_mode = true
+use_warrior_style = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Body" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+translation = Vector3(0, 1.05, 0)
+material_override = SubResource( 6 )
+
+[node name="Idle" parent="." instance=ExtResource( 2 )]
+
+[node name="Head" type="MeshInstance" parent="Body"]
+mesh = SubResource( 3 )
+material_override = SubResource( 5 )
+translation = Vector3(0, 0.95, 0)
+scale = Vector3(0.42, 0.45, 0.42)
+
+[node name="LeftArm" type="MeshInstance" parent="Body"]
+mesh = SubResource( 4 )
+material_override = SubResource( 5 )
+translation = Vector3(-0.48, 0.15, 0)
+rotation_degrees = Vector3(0, 0, 90)
+scale = Vector3(0.23, 0.85, 0.23)
+
+[node name="RightArm" type="MeshInstance" parent="Body"]
+mesh = SubResource( 4 )
+material_override = SubResource( 5 )
+translation = Vector3(0.48, 0.15, 0)
+rotation_degrees = Vector3(0, 0, 90)
+scale = Vector3(0.23, 0.85, 0.23)
+
+[node name="LeftLeg" type="MeshInstance" parent="Body"]
+mesh = SubResource( 4 )
+material_override = SubResource( 5 )
+translation = Vector3(-0.18, -0.95, 0)
+scale = Vector3(0.28, 1.1, 0.28)
+
+[node name="RightLeg" type="MeshInstance" parent="Body"]
+mesh = SubResource( 4 )
+material_override = SubResource( 5 )
+translation = Vector3(0.18, -0.95, 0)
+scale = Vector3(0.28, 1.1, 0.28)

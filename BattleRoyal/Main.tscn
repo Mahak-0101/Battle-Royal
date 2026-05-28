@@ -1,0 +1,133 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Camera.gd" type="Script" id=2]
+[ext_resource path="res://GameManager.gd" type="Script" id=3]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/WeaponPickup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/ArenaBuilder.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Shaders/CloudLayer.shader" type="Shader" id=7]
+[ext_resource path="res://Scenes/WindAmbience.gd" type="Script" id=8]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.133333, 0.392157, 0.176471, 1 )
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="ProceduralSky" id=5]
+sky_top_color = Color( 0.541176, 0.666667, 0.760784, 1 )
+sky_horizon_color = Color( 0.815686, 0.858824, 0.886275, 1 )
+ground_bottom_color = Color( 0.372549, 0.380392, 0.356863, 1 )
+ground_horizon_color = Color( 0.592157, 0.619608, 0.576471, 1 )
+sun_color = Color( 1, 0.956863, 0.862745, 1 )
+sun_latitude = 72.0
+sun_curve = 0.08
+
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 5 )
+ambient_light_color = Color( 0.705882, 0.756863, 0.772549, 1 )
+ambient_light_energy = 1.18
+ambient_light_sky_contribution = 0.58
+fog_color = Color( 0.635294, 0.690196, 0.72549, 1 )
+fog_sun_amount = 0.3
+fog_depth_begin = 24.0
+fog_depth_end = 122.0
+glow_enabled = true
+glow_intensity = 0.08
+glow_strength = 0.22
+glow_bloom = 0.08
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 7 )
+shader_param/cloud_tint = Color( 0.97, 0.98, 1, 1 )
+shader_param/shadow_tint = Color( 0.73, 0.77, 0.83, 1 )
+shader_param/cloud_scale = 0.0045
+shader_param/cloud_speed = 0.004
+shader_param/detail_scale = 0.012
+shader_param/opacity = 0.34
+
+[sub_resource type="PlaneMesh" id=7]
+size = Vector2( 250, 250 )
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 7 )
+shader_param/cloud_tint = Color( 0.97, 0.98, 1, 1 )
+shader_param/shadow_tint = Color( 0.73, 0.77, 0.83, 1 )
+shader_param/cloud_scale = 0.0045
+shader_param/cloud_speed = 0.004
+shader_param/detail_scale = 0.012
+shader_param/opacity = 0.34
+
+[node name="Main" type="Spatial"]
+
+[node name="Ground" type="MeshInstance" parent="."]
+transform = Transform( 82, 0, 0, 0, 0.45, 0, 0, 0, 82, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="StaticBody" type="StaticBody" parent="Ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground/StaticBody"]
+shape = SubResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 8, 12 )
+current = true
+fov = 64.0
+near = 0.08
+far = 90.0
+script = ExtResource( 2 )
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="FireSound" type="AudioStreamPlayer" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="PistolPickup" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, 6 )
+visible = false
+script = null
+
+[node name="ArenaBuilder" type="Spatial" parent="."]
+script = ExtResource( 6 )
+terrain_resolution = 20
+tree_count = 6
+rock_count = 16
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0 )
+light_color = Color( 1, 0.960784, 0.878431, 1 )
+light_energy = 1.1
+shadow_color = Color( 0.501961, 0.552941, 0.611765, 1 )
+shadow_bias = 0.035
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[node name="CloudLayer" type="MeshInstance" parent="."]
+transform = Transform( 245, 0, 0, 0, 1, 0, 0, 0, 245, 0, 38, 0 )
+material_override = SubResource( 6 )
+cast_shadow = 0
+mesh = SubResource( 7 )
+
+[node name="CloudLayerFar" type="MeshInstance" parent="."]
+transform = Transform( 285, 0, 0, 0, 1, 0, 0, 0, 285, 0, 46, 0 )
+visible = false
+material_override = SubResource( 8 )
+cast_shadow = 0
+mesh = SubResource( 7 )
+
+[node name="WindAmbience" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 8 )

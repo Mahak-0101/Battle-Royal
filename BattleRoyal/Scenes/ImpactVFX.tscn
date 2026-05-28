@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+[ext_resource path="res://Scenes/ImpactVFX.gd" type="Script" id=1]
+
+[sub_resource type="ParticleProcessMaterial" id=1]
+gravity = 0
+initial_velocity = 6
+scale = 0.18
+
+[node name="ImpactVFX" type="CPUParticles"]
+script = ExtResource( 1 )
+amount = 12
+one_shot = true
+lifetime = 0.6
+process_material = SubResource( 1 )
