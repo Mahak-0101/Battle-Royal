@@ -20,7 +20,8 @@
   <a href="#-highlights">Highlights</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-controls">Controls</a> •
-  <a href="#-roadmap">Roadmap</a>
+  <a href="#-roadmap">Roadmap</a> •
+  <a href="#-wiki">Wiki</a>
 </p>
 
 ---
@@ -115,6 +116,17 @@ Note: Update this table if your Input Map changes.
 - Stronger audio and hit feedback polish
 - Pause/settings menu
 - Score system + end game flow
+
+---
+
+## Wiki
+
+Explore the in-repo game-themed wiki:
+
+- [🏰 Wiki Home](wiki/Home.md)
+- [🚀 Getting Started](wiki/Getting-Started.md)
+- [🎯 Gameplay Guide](wiki/Gameplay-Guide.md)
+- [🗺️ World & Systems](wiki/World-and-Systems.md)
 
 ---
 
